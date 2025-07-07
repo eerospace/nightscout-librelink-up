@@ -16,7 +16,7 @@ NIGHTSCOUT_SECRET = os.getenv("NIGHTSCOUT_API_SECRET")
 TIMEZONE = os.getenv("TIMEZONE", "UTC")
 
 API_URL = f"https://api.libreview.io/llu/v2"
-LOGIN_URL = f"{API_URL}/auth/login"
+LOGIN_URL = "https://api.libreview.io/llu/auth/login
 
 session = requests.Session()
 
