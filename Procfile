@@ -1,1 +1,1 @@
-worker: npm run start-heroku
+worker: python main.py
