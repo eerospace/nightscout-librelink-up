@@ -28,18 +28,29 @@ def login():
     }
     headers = {
         "product": "llu.android",
-        "version": "4.7"
+        "version": "4.7",
+        "Content-Type": "application/json"
     }
 
-    res = session.post(LOGIN_URL, json=payload, headers=headers)
-    res.raise_for_status()
-    data = res.json()
-    token = data["data"]["authTicket"]["token"]
-    session.headers.update({
-        "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json"
-    })
-    print("[INFO] Login successful.")
+    try:
+        res = session.post(LOGIN_URL, json=payload, headers=headers)
+        print("[DEBUG] Login response:", res.status_code, res.text)
+        res.raise_for_status()
+        data = res.json()
+
+        if "data" not in data:
+            print("[ERROR] Login failed. Response did not include expected 'data'.")
+            print("[ERROR] Full response:", data)
+            raise SystemExit(1)
+
+        token = data["data"]["authTicket"]["token"]
+        session.headers.update({
+            "Authorization": f"Bearer {token}"
+        })
+        print("[INFO] Login successful.")
+    except Exception as e:
+        print(f"[ERROR] Login exception: {e}")
+        raise SystemExit(1)
 
 def get_glucose():
     print("[INFO] Getting glucose data...")
