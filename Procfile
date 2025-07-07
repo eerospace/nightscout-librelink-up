@@ -1,1 +1,1 @@
-worker: python main.py
+worker: python librelinkup_to_nightscout.py
